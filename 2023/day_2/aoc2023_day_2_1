@@ -1,0 +1,38 @@
+with open('day_2\input.txt', 'r') as input_file:
+    input = input_file.read()
+item_split = [item.split(";") for item in input.split("\n")]
+
+red = {}
+green = {}
+blue = {}
+for count,item_list in enumerate(item_split):
+    count+=1
+    game_count = count
+    red[game_count] = []
+    green[game_count] = []
+    blue[game_count] = []
+
+    for item in item_list:
+        if "red" in item:
+            red[game_count].append(int(item[item.find("red")-3:item.find("red")]))
+        if "green" in item:
+            green[game_count].append(int(item[item.find("green")-3:item.find("green")]))
+        if "blue" in item:
+            blue[game_count].append(int(item[item.find("blue")-3:item.find("blue")]))
+
+def max_cubes_games(dict,max_cubes):
+    list_games = []
+    for games,cubes in dict.items():
+        if len(cubes) == 0:
+            break
+        if max(cubes) <= max_cubes:
+            list_games.append(games)
+    return list_games
+
+red_cubes = max_cubes_games(red,12)
+green_cubes = max_cubes_games(green,13)
+blue_cubes = max_cubes_games(blue,14)
+
+print(sum(list(set(list(set(red_cubes).intersection(green_cubes))).intersection(blue_cubes))))
+
+

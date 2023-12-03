@@ -1,0 +1,10 @@
+with open('day_3\input_test.txt', 'r') as input_file:
+    input = input_file.read()
+item_split = [item for item in input.split("\n")]
+
+for item in item_split:
+    new_str = ""
+    for character in item:
+        if character != ".":
+            new_str+=character
+            print(new_str)

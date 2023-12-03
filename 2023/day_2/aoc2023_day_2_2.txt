@@ -1,0 +1,42 @@
+with open('day_2\input.txt', 'r') as input_file:
+    input = input_file.read()
+item_split = [item.split(";") for item in input.split("\n")]
+
+red = {}
+green = {}
+blue = {}
+for count,item_list in enumerate(item_split):
+    count+=1
+    game_count = count
+    red[game_count] = []
+    green[game_count] = []
+    blue[game_count] = []
+
+    for item in item_list:
+        if "red" in item:
+            red[game_count].append(int(item[item.find("red")-3:item.find("red")]))
+        if "green" in item:
+            green[game_count].append(int(item[item.find("green")-3:item.find("green")]))
+        if "blue" in item:
+            blue[game_count].append(int(item[item.find("blue")-3:item.find("blue")]))
+
+def multiply_lists(list1,list2,list3):
+    result = 0
+    for x in range(len(list1)):
+        result += list1[x] * list2[x] * list3[x]
+    return result
+
+def get_max_cubes_games(dict):
+    list_max_cubes = []
+    for cubes in dict.values():
+        if len(cubes) == 0:
+            break
+        list_max_cubes.append(max(cubes))
+    return list_max_cubes
+
+red_cubes = get_max_cubes_games(red)
+green_cubes = get_max_cubes_games(green)
+blue_cubes = get_max_cubes_games(blue)
+
+print(multiply_lists(red_cubes,green_cubes,blue_cubes))
+
