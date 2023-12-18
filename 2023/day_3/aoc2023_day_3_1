@@ -1,3 +1,83 @@
-with open('2023\day_3\input_test.txt', 'r') as input_file:
-    input = input_file.read()
+with open('2023/day_3/input_test.txt', 'r') as input_file:
+  input = input_file.read()
 item_split = [item for item in input.split("\n")]
+
+symbols = ""
+for item in item_split:
+  for character in item:
+    if not character.isdigit() and character != ".":
+      symbols += character
+
+def check_adjacent_cells(list,x,y):
+  next = list[y][x+1]
+  previous = list[y][x-1]
+  below = list[y+1][x]
+  below_left = list[y+1][x-1]
+  below_right = list[y+1][x+1]
+  above = list[y-1][x]
+  above_left = list[y-1][x-1]
+  above_right = list[y-1][x+1]
+
+parts = []
+for y,row in enumerate(item_split):
+  #if first row
+  if y == 0:
+    for x,column in enumerate(row):
+      #if first column
+      part = ""
+      if column.isdigit():
+        previous = item_split[y][x-1]
+        next = item_split[y][x+1]
+        below = item_split[y+1][x]
+        below_right = item_split[y+1][x+1]
+        below_left = item_split[y+1][x-1]
+        if x == 0:
+          #check next, below, and corner
+          #check if column checks are symbols
+          #if next in below in corner_right in symbols:
+          if next in symbols or below in symbols or below_right in symbols:
+            print(column,next)
+            print(below,below_right)
+        if x != 0 and x <= len(row)-2:
+          #check previous, next, below, and corners
+          if below_right in symbols or previous in symbols or next in symbols or below_left in symbols or below in symbols:
+            print(previous,column,next)
+            print(below_left,below,below_right)
+        if x == len(row)-1:
+          #check previous and below, and corner
+          if previous in symbols or below_left in symbols or below in symbols:
+            print(previous,column)
+            print(below_left,below)
+  if y != 0 and y <= len(item_split)-2:
+    for x,column in enumerate(row):
+      #if first column
+      part = ""
+      if column.isdigit():
+        above = item_split[y-1][x]
+        above_right = item_split[y-1][x+1]
+        above_left = item_split[y-1][x-1]
+        previous = item_split[y][x-1]
+        next = item_split[y][x+1]
+        below = item_split[y+1][x]
+        below_right = item_split[y+1][x+1]
+        below_left = item_split[y+1][x-1]
+        if x == 0:
+          #check next, below, above, and corners
+          #check if column checks are symbols
+          #if next in below in corner_right in symbols:
+          if next in symbols or below in symbols or below_right in symbols or above in symbols or above_right in symbols:
+            print(above,above_right)
+            print(column,next)
+            print(below,below_right)
+        if x != 0 and x <= len(row)-2:
+          #check previous, next, below, above, and corners
+          if below_right in symbols or previous in symbols or next in symbols or below_left in symbols or below in symbols or above in symbols or above_left in symbols or above_right in symbols:
+            print(above_left,above,above_right)
+            print(previous,column,next)
+            print(below_left,below,below_right)
+        if x == len(row)-1:
+          #check previous, below, above, and corners
+          if previous in symbols or below_left in symbols or below in symbols or above in symbols or above_left in symbols:
+            print(previous,column)
+            print(below_left,below)
+# print(parts)

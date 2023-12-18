@@ -1,0 +1,26 @@
+with open('2023/day_3/input_test.txt', 'r') as input_file:
+  input = input_file.read()
+item_split = [item for item in input.split("\n")]
+
+symbols = ""
+for item in item_split:
+  for character in item:
+    if not character.isdigit() and character != ".":
+      symbols += character
+
+def get_adjacent_cells(list,y,x):
+  up = y-1
+  down = y+1
+  left = x-1
+  right = x+1
+  return [[list[up][left],list[up][x],list[up][right]],
+          [list[y][left],list[y][x],list[y][right]],
+          [list[down][left],list[down][x],list[down][right]]]
+
+for y,row in enumerate(item_split):
+  for x,column in enumerate(row):
+    if column in symbols:
+      print(column)
+      adjacent_cells = get_adjacent_cells(item_split,y,x)
+      for adjacent_cell in adjacent_cells:
+        print(adjacent_cell)
