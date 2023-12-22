@@ -2,15 +2,14 @@ with open('2023/day_4/input_test.txt', 'r') as input_file:
   input = input_file.read()
 input_split = [item for item in input.split("\n")]
 
-def winning_sum(x):
-  sum = 0
-  for i in range(0, x):
-    sum = 2 ** i
-  return sum
 
 points = 0
-total_scratchcards = []
+initial_scratchcards = []
+scratchcard_copies = []
+
 for i,input in enumerate(input_split):
+  print(input[:8])
+  initial_scratchcards.append(i+1)
   # new_input = input[10:]
   new_input = input[8:]
   new_input_split = new_input.split(" | ")
@@ -21,17 +20,46 @@ for i,input in enumerate(input_split):
   while '' in my_numbers:
     my_numbers.remove('')
   matched_numbers = list(set(winning_numbers).intersection(my_numbers))
-
-  for x in range(1,len(matched_numbers)+2):
-    card_number = f"Card {x + i}"
-    print(card_number)
-    total_scratchcards.append(card_number)
-  print(matched_numbers)
-  points += winning_sum(len(matched_numbers))
+  print(f"Card {i+1} wins copies of the following cards:")
+  if len(matched_numbers):
+    print(*range(i+2,len(matched_numbers)+(i+2)))
+    scratchcard_copies.append([*range(i+2,len(matched_numbers)+(i+2))])
   # print(points)
 # print(points)
-print(total_scratchcards)
+print(initial_scratchcards)
+total_scratchcards = initial_scratchcards
+print(scratchcard_copies)
 
-# 1 2 3 4 5
-#   3 
-#   4
+
+# The winning numbers instruct the next cards to multiply
+
+# 1: 2 3 4 5
+# 2: 3 4
+# 2: 3 4
+# 3: 4 5
+# 3: 4 5
+# 3: 4 5
+# 3: 4 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 4: 5
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 5: 
+# 6: 
